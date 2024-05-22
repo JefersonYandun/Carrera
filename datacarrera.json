@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "nombre": "Juan",
+    "distancia": "5",
+    "velocidad": "7.61",
+    "posicion": 0
+  },
+  {
+    "id": 2,
+    "nombre": "gohan",
+    "distancia": 12,
+    "velocidad": "8.64",
+    "posicion": 0
+  }
+]

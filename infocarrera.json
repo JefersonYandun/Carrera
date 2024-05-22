@@ -1,0 +1,11 @@
+{
+  "distanciaTotal": 10,
+  "horas": 5,
+  "ganador": {
+    "id": 1,
+    "nombre": "Juan",
+    "distancia": "5",
+    "velocidad": "7.61",
+    "posicion": "07.617.617.617.617.61"
+  }
+}

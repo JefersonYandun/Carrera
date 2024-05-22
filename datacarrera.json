@@ -12,5 +12,11 @@
     "distancia": 12,
     "velocidad": "8.64",
     "posicion": 0
+  },
+  {
+    "id": 3,
+    "nombre": "Corredor1",
+    "distancia": 10,
+    "velocidad": 2
   }
 ]

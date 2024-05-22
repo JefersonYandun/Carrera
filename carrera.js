@@ -42,12 +42,14 @@ const simularCarrera = (corredores, distanciaTotal) => {
             }
         }
         console.log(`\nPosiciones después de ${horas} horas:`);
-        posiciones.forEach(corredor => console.log(`${corredor.nombre}: ${corredor.posicion.toFixed(2)} km`));
+        posiciones.forEach(corredor => console.log(`${corredor.nombre}: ${parseFloat(corredor.posicion).toFixed(2)} km`)); // Asegurarse de que corredor.posicion sea un número
     }
 
     posiciones.sort((a, b) => b.posicion - a.posicion);
     return { horas, posiciones };
 };
+
+
 
 app.all('/carrera', (req, res) => {
     let corredores = leerDatos(dataCarreraFilePath);
@@ -98,10 +100,6 @@ app.post('/simular', (req, res) => {
     escribirDatos(infoCarreraFilePath, { distanciaTotal: parseFloat(distanciaCarrera), horas, ganador });
 
     res.json({ horas, posiciones, ganador });
-});
-
-app.listen(port, () => { 
-    console.log(`El servidor está ejecutándose en el puerto ${port}`);
 });
 
 

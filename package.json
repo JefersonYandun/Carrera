@@ -1,0 +1,26 @@
+{
+  "name": "carrera",
+  "version": "1.0.0",
+  "description": "Simulacion de carrera con arquitectura servidor - cliente node",
+  "main": "carrera.js",
+  "scripts": {
+    "start": "node carrera.js",
+    "dev": "nodemon carrera.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JefersonYandun/Carrera.git"
+  },
+  "author": "Jeferson Yandun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JefersonYandun/Carrera/issues"
+  },
+  "homepage": "https://github.com/JefersonYandun/Carrera#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

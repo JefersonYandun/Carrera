@@ -1,22 +1,38 @@
 [
   {
     "id": 1,
-    "nombre": "Juan",
-    "distancia": "5",
-    "velocidad": "7.61",
-    "posicion": 0
+    "nombre": "CORREDOR ONE"
   },
   {
     "id": 2,
-    "nombre": "gohan",
-    "distancia": 12,
-    "velocidad": "8.64",
-    "posicion": 0
+    "nombre": "CORREDOR TWO"
   },
   {
     "id": 3,
-    "nombre": "Corredor1",
-    "distancia": 10,
-    "velocidad": 2
+    "nombre": "MESSI"
+  },
+  {
+    "id": 4,
+    "nombre": "CORREDOR%FOR"
+  },
+  {
+    "id": 5,
+    "nombre": "CORREDOR%SINCO"
+  },
+  {
+    "id": 6,
+    "nombre": "CORREDOR%CEIS"
+  },
+  {
+    "id": 8,
+    "nombre": "ultimo"
+  },
+  {
+    "id": 10,
+    "nombre": "NUEVO"
+  },
+  {
+    "id": 11,
+    "nombre": "CORREDOR%OCHIO"
   }
 ]

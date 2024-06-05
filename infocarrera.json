@@ -1,10 +1,10 @@
 {
-  "distanciaTotal": 40,
-  "horas": 4,
+  "distanciaTotal": 50,
+  "horas": 50,
   "ganador": {
-    "id": 1,
-    "nombre": "CORREDOR ONE",
-    "posicion": 40,
-    "velocidad": 10
+    "id": 9,
+    "nombre": "Gaby",
+    "posicion": 50,
+    "velocidad": 9
   }
 }

@@ -12,6 +12,7 @@ const dataCarreraFilePath = path.join(__dirname, 'datacarrera.json');
 const infoCarreraFilePath = path.join(__dirname, 'infocarrera.json');
 const historialCarreraFilePath = path.join(__dirname, 'historialcarrera.json');
 
+// Función leer datos archivo JSON
 const leerDatos = (filePath) => {
     try {
         const rawData = fs.readFileSync(filePath);
@@ -22,6 +23,7 @@ const leerDatos = (filePath) => {
     }
 };
 
+// Función escribir datos JSON
 const escribirDatos = (filePath, data) => {
     try {
         fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
@@ -30,43 +32,58 @@ const escribirDatos = (filePath, data) => {
     }
 };
 
+// Función generar velocidad aleatoria entre 1 y 10
 const generarVelocidad = () => Math.floor(Math.random() * 10) + 1;
 
 const simularCarrera = (corredores, distanciaTotal) => {
-    let horas = 0;
-    const posiciones = corredores.map(corredor => ({ ...corredor, posicion: 0 }));
     const historial = [];
+    let maxHoras = 0;
 
-    while (!posiciones.some(corredor => corredor.posicion >= distanciaTotal)) {
-        horas++;
-        for (const corredor of posiciones) {
+    // Calcula el tiempo necesario para cada corredor y el tiempo máximo de carrera
+    corredores.forEach(corredor => {
+        const tiempoNecesario = distanciaTotal / corredor.velocidad;
+        const horasNecesarias = Math.ceil(tiempoNecesario);
+        maxHoras = Math.max(maxHoras, horasNecesarias);
+    });
+
+    for (let hora = 1; hora <= maxHoras; hora++) {
+        corredores.forEach(corredor => {
             corredor.posicion += corredor.velocidad;
-            if (corredor.posicion >= distanciaTotal) {
+            if (corredor.posicion > distanciaTotal) {
                 corredor.posicion = distanciaTotal;
             }
-        }
-        historial.push({
-            horas,
-            posiciones: JSON.parse(JSON.stringify(posiciones))
         });
-        console.log(`\nPosiciones después de ${horas} horas:`);
-        posiciones.forEach(corredor => console.log(`${corredor.nombre}: ${corredor.posicion.toFixed(2)} km`));
+
+        historial.push({
+            horas: hora,
+            posiciones: corredores.map(corredor => ({
+                id: corredor.id,
+                nombre: corredor.nombre,
+                posicion: corredor.posicion,
+                kmRecorridos: corredor.posicion
+            }))
+        });
     }
 
-    posiciones.sort((a, b) => b.posicion - a.posicion);
-    return { horas, posiciones, historial };
+    corredores.sort((a, b) => {
+        if (b.posicion === a.posicion) {
+            return b.velocidad - a.velocidad;
+        }
+        return b.posicion - a.posicion;
+    });
+
+    return { horas: maxHoras, posiciones: corredores, historial };
 };
 
-// GET /corredores - Obtener la lista de corredores
+// Rutas del servidor
 
-//http://localhost:3000/corredores
+// Obtener la lista de corredores
 app.get('/corredores', (req, res) => {
     const corredores = leerDatos(dataCarreraFilePath);
     res.json(corredores);
 });
 
-// POST /corredores - Agregar un nuevo corredor
-//http://localhost:3000/corredores?nombre=CORREDOR%20CIETE
+// Agregar un nuevo corredor
 app.post('/corredores', (req, res) => {
     const { nombre } = req.query;
     if (!nombre) {
@@ -82,9 +99,7 @@ app.post('/corredores', (req, res) => {
     res.status(201).json(nuevoCorredor);
 });
 
-// PUT /corredores/:id - Actualizar el nombre de un corredor
-//http://localhost:3000/corredores/4?nombre=VEGETA
-
+// Actualizar el nombre de un corredor
 app.put('/corredores/:id', (req, res) => {
     const { id } = req.params;
     const { nombre } = req.query;
@@ -98,9 +113,7 @@ app.put('/corredores/:id', (req, res) => {
     res.json(corredores[index]);
 });
 
-// DELETE /corredores/:id - Eliminar un corredor
-//http://localhost:3000/corredores/3
-
+// Eliminar un corredor
 app.delete('/corredores/:id', (req, res) => {
     const { id } = req.params;
     let corredores = leerDatos(dataCarreraFilePath);
@@ -109,9 +122,7 @@ app.delete('/corredores/:id', (req, res) => {
     res.status(204).send();
 });
 
-// POST /simular - Simular la carrera
-//http://localhost:3000/simular?numeroCorredores=5&distanciaCarrera=15
-
+// Simular la carrera
 app.post('/simular', (req, res) => {
     const { numeroCorredores, distanciaCarrera } = req.query;
     if (!numeroCorredores || !distanciaCarrera) {
@@ -133,17 +144,13 @@ app.post('/simular', (req, res) => {
     res.json({ horas, posiciones, ganador });
 });
 
-// GET /historial - Obtener el historial de la simulación
-//http://localhost:3000/historial
-
+// Obtener el historial de la simulación
 app.get('/historial', (req, res) => {
     const historial = leerDatos(historialCarreraFilePath);
     res.json(historial);
 });
 
-
-
 // Iniciar el servidor
-app.listen(3000, () => { 
+app.listen(3000, () => {
     console.log("El servidor está ejecutándose en el puerto 3000");
 });
